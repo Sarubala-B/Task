@@ -15,8 +15,7 @@ const App = () => {
   const [registeredUsers, setRegisteredUsers] = useState({}); // State to store registered users
 
   const emailRegex = /^[a-z0-9]+@gmail\.com$/;
-  // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  
+ 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -44,6 +43,7 @@ const App = () => {
     }
 
     const data = await response.json();
+    console.log('data:', data);
     if(data.status=="success"){
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('refreshToken', data.data.refreshToken);
@@ -124,6 +124,7 @@ const handleSignUp = async() =>{
   }
 
   const accessToken = localStorage.getItem('accessToken');
+    console.log("accessToken--1", accessToken)
     if (accessToken) {
         return <Apps />;
     }
