@@ -43,9 +43,7 @@ router.post('/todos', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-      console.log("req", req.body);
       const { taskName } = req.body;
-      console.log("taskName", taskName);
       if (!taskName) {
         return res.status(200).json({ status: "failure", message: 'Task name is required' });
       }
@@ -71,9 +69,7 @@ router.post('/updateTask', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-    console.log("req", req.body)
     var data = req.body;
-    console.log("data", data)
     if (!data.taskName) {
       return res.status(200).json({status:"failure", message: 'Task name is required' });
     }   // Check for duplicate taskName
@@ -106,9 +102,7 @@ router.post('/updateTaskStatus', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-    console.log("req", req.body)
     var data = req.body;
-    console.log("data", data)
     const [updated] = await ToDo.update(
       { status: data.status },         
       { where: { id: data.id } }      
@@ -141,7 +135,6 @@ router.get('/todos/:status', async (req, res) => {
       var allCounts;
       var inprogressCounts;
       var completedCounts;
-      console.log("req", req.params)
       if(req.params.status=="All"){
         todos = await ToDo.findAll({ where: { deleteFlag: 0 } });
       }else{
@@ -185,7 +178,6 @@ router.get('/todos/:id', async (req, res) => {
 // Update a to-do item
 router.put('/todos/:id',async (req, res) => {
   try {
-    console.log("req", req.body)
     const { taskName, completed } = req.body;
     const todo = await ToDo.findByPk(req.params.id);
     if (!todo) {
