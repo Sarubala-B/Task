@@ -44,7 +44,6 @@ const App = () => {
     }
 
     const data = await response.json();
-    console.log('data:', data);
     if(data.status=="success"){
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('refreshToken', data.data.refreshToken);
@@ -125,7 +124,6 @@ const handleSignUp = async() =>{
   }
 
   const accessToken = localStorage.getItem('accessToken');
-    console.log("accessToken--1", accessToken)
     if (accessToken) {
         return <Apps />;
     }
