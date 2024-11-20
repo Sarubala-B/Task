@@ -1,0 +1,31 @@
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fadeInOut 3s ease;
+}
+  
+  
+.toast-success {
+    background-color: #319434;
+    font-weight: bold;
+}
+.toast-info {
+    background-color: #1d7cca;
+    font-weight: bold;
+} 
+.toast-error {
+    background-color: #bd281e;
+    font-weight: bold;
+}   
+.toast-warning {
+    background-color: #6A0DAD;
+    font-weight: bold;
+    color:white;
+}
