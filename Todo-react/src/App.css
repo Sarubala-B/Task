@@ -1,0 +1,109 @@
+/* src/App.css */
+
+/* General Container Styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* Login Container Styling */
+.login-container {
+  width: 300px;
+  padding: 50px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.signup-container {
+  width: 300px;
+  padding: 50px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Input Box Styling */
+.input-box {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="checkbox" i] {
+  cursor: pointer;
+}
+
+/* Button Styling */
+.login-button, .signup-button, .signin-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-button {
+  background-color: #4CAF50;
+}
+
+.signup-button {
+  background-color: #2196F3;
+}
+
+.signin-button {
+  background-color: #FF5722;
+}
+
+/* Text Styling */
+.info-text {
+  margin-top: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Success Message Styling */
+.success-message {
+  margin-top: 20px;
+  padding: 10px;
+  color: #fff;
+  background-color: #4CAF50;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Error Text Styling */
+.error-text {
+  color: #ff0000;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Password Container Styling */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Toggle Password Icon Styling */
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #2196F3;
+  font-size: 16px; /* Adjust size as needed */
+  cursor: pointer;
+}
