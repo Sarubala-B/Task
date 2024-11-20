@@ -34,11 +34,14 @@ function Apps() {
     }, [activeTab]);
 
     const handleLogout = () => {
+        // Implement the logout functionality here
+        console.log('Logging out...');
         localStorage.clear();
         setShowLogin(true)
     };
 
     const handleEditTask = (task) => {
+        console.log("handleEditTask", task)
         setEditMode(true);
         setTaskToEdit(task);
         setEditTaskId(task.id);
@@ -69,7 +72,9 @@ function Apps() {
                 },
                 body: JSON.stringify({ taskName: taskName}), // Send only the new task
             });
+    console.log("response", response)
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 setToastStatus({status: data.status, message:data.message});
                 getTodos();
@@ -85,7 +90,9 @@ function Apps() {
         }
     };
 
-    const handleUpdateTask = async (taskName) => {    
+    const handleUpdateTask = async (taskName) => {
+        console.log("updatetask", taskName)
+    
         if (taskName.trim() === '') {
             setToastStatus({status: "warning", message:"Task cannot be empty"})
             return;
@@ -107,8 +114,10 @@ function Apps() {
                 },
                 body: JSON.stringify({id: editTaskId, taskName: taskName}), // Send only the new task
             });
+    console.log("response", response)
     
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 setToastStatus({status: data.status, message:data.message});
                 setEditMode(false);
@@ -129,6 +138,7 @@ function Apps() {
 
     const getTodos = async() =>{
         try {
+            console.log("active", activeTab)
             const response = await fetch('http://localhost:5000/api/todos/'+activeTab, {
                 method: 'GET',
                 headers: {
@@ -137,12 +147,14 @@ function Apps() {
                     'UserId': localStorage.getItem('userId')
                 },
             });
+    console.log("response", response)
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to save task to the database');
             }
     
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 setTasks(data.data.reverse());
                 setAllCount(data.all);
@@ -160,12 +172,12 @@ function Apps() {
         }
     }
     
-    
     const handleToastClose = () => {
         setToastStatus({status: "", message:""})
     };
 
     const handleToggleTaskStatus = async(task, taskStatus) => {
+        console.log("task jjj", task, taskStatus)
         // API call to save task in the database
         try {
             const response = await fetch('http://localhost:5000/api/updateTaskStatus', {
@@ -177,8 +189,10 @@ function Apps() {
                 },
                 body: JSON.stringify({id: task.id, status: taskStatus}), // Send only the new task
             });
+            console.log("response", response)
     
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 setToastStatus({status: data.status, message:data.message});
                 getTodos();
@@ -195,6 +209,7 @@ function Apps() {
     };
 
     const handleDeleteTask = async(taskToDelete) => {
+        console.log("taskToDelete", taskToDelete)
         try {
             const response = await fetch('http://localhost:5000/api/todos/'+taskToDelete.id, {
                 method: 'DELETE',
@@ -204,12 +219,14 @@ function Apps() {
                     'UserId': localStorage.getItem('userId')
                 },
             });
+    console.log("response", response)
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to save task to the database');
             }
     
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 setToastStatus({status: data.status, message:data.message});
                 setTaskToDelete(null);
@@ -236,12 +253,14 @@ function Apps() {
                     'UserId': localStorage.getItem('userId')
                 },
             });
+    console.log("response", response)
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to save task to the database');
             }
     
             const data = await response.json();
+            console.log('data:', data);
             if(data.status=="success"){
                 localStorage.setItem("accessToken", data.data.accessToken)
             }else{
