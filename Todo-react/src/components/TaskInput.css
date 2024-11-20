@@ -1,0 +1,42 @@
+/* TaskInput.css */
+.task-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+    width: 100%;
+}
+.input-button-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.task-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #282c34;
+    border-radius: 4px;
+    width: 100%;
+    margin-right: 10px;
+}
+.task-input:hover{
+    border: 2px solid #282c34;
+}
+.error-message {
+    color: rgb(241, 15, 15); 
+    font-size: 16px;
+    margin-top: 4px;
+    font-weight: bold;
+    text-align: left;
+    width: 90%;
+  }
+.add-task-button{
+    background-color: #09db25;
+    color: rgb(248, 244, 244);
+    font-weight: bold;
+}
+.add-task-button:hover{
+    background-color: #7378c9;
+    border: 2px solid black;
+}
