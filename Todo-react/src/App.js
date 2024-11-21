@@ -36,29 +36,33 @@ const App = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+  
       if (!response.ok) {
+        // If the response is not OK, handle specific errors
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to login');
-    }
-
-    const data = await response.json();
-    console.log('data:', data);
-    if(data.status=="success"){
-      localStorage.setItem('accessToken', data.data.accessToken);
-      localStorage.setItem('refreshToken', data.data.refreshToken);
-      localStorage.setItem('userId', data.data.id)
-      setIsSignedIn(true);
-      setErrorMessage('');
-    }else{
-      setErrorMessage("Server error, please try again later.")
-    }
+        setErrorMessage(errorData.error || 'Failed to login');
+        return;
+      }
+  
+      const data = await response.json();
+      console.log('data:', data);
+  
+      if (data.status === "success") {
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
+        localStorage.setItem('userId', data.data.id);
+        setIsSignedIn(true);
+        setErrorMessage('');
+      } else {
+        setErrorMessage("Server error, please try again later.");
+      }
   
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMessage('Server error, please try again later.');
     }
   };
+  
                      
 
   const validateSignUp = async (e) => {
