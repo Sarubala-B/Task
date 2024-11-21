@@ -168,37 +168,6 @@ router.get('/todos/:status', async (req, res) => {
   }
 });
 
-// Get a single to-do item by ID
-router.get('/todos/:id', async (req, res) => {
-  try {
-    const todo = await ToDo.findByPk(req.params.id);
-    if (!todo) {
-      return res.status(404).json({ status: "failure", message: 'Task not found' });
-    }
-    res.status(200).json({status:"success", message: 'Task deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// Update a to-do item
-router.put('/todos/:id',async (req, res) => {
-  try {
-    console.log("req", req.body)
-    const { taskName, completed } = req.body;
-    const todo = await ToDo.findByPk(req.params.id);
-    if (!todo) {
-    }
-    todo.taskName = taskName || todo.taskName;
-    todo.completed = completed !== undefined ? completed : todo.completed;
-    await todo.save();
-    res.status(200).json({ message: 'ToDo item updated successfully', todo });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
 
 // Delete a to-do item
 router.delete('/todos/:id', async (req, res) => {
