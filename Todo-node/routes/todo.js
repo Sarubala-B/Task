@@ -4,7 +4,7 @@ const ToDo = require('../models/ToDo'); // Import the ToDo model correctly
 const router = express.Router();
 const crypto = require('crypto');
 
-const SECRET_KEY = 'supersecretkey123'; // Replace with a secure key
+const SECRET_KEY = "a3f5c1eaa2834c1f92f0568abed83b4b9f0fcd8a7e5cbfed4fbd01dc5762c8ab"; // Replace with a secure key
 
 // Middleware to verify the token
 function verifyAuthToken(req) {
@@ -43,9 +43,8 @@ router.post('/todos', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-      console.log("req", req.body);
       const { taskName } = req.body;
-      console.log("taskName", taskName);
+      const userId = req.headers['userid'];
       if (!taskName) {
         return res.status(200).json({ status: "failure", message: 'Task name is required' });
       }
@@ -55,7 +54,7 @@ router.post('/todos', async (req, res) => {
         return res.status(200).json({ status: "failure", message: 'Task name already exists' });
       }
       // Create the new task if no duplicate is found
-      await ToDo.create({ taskName });
+      await ToDo.create({ taskName, userId });
       res.status(201).json({ status: "success", message: 'Task added successfully' });
     }else{
       res.status(200).json({ status:"failure", message: verifyToken.message})
@@ -71,9 +70,7 @@ router.post('/updateTask', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-    console.log("req", req.body)
     var data = req.body;
-    console.log("data", data)
     if (!data.taskName) {
       return res.status(200).json({status:"failure", message: 'Task name is required' });
     }   // Check for duplicate taskName
@@ -106,9 +103,7 @@ router.post('/updateTaskStatus', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
-    console.log("req", req.body)
     var data = req.body;
-    console.log("data", data)
     const [updated] = await ToDo.update(
       { status: data.status },         
       { where: { id: data.id } }      
@@ -136,25 +131,25 @@ router.get('/todos/:status', async (req, res) => {
   try {
     const verifyToken = verifyAuthToken(req);
     if(verifyToken.status){
+      const userId = req.headers['userid'];
       var todos;
       var status;
       var allCounts;
       var inprogressCounts;
       var completedCounts;
-      console.log("req", req.params)
       if(req.params.status=="All"){
-        todos = await ToDo.findAll({ where: { deleteFlag: 0 } });
+        todos = await ToDo.findAll({ where: { deleteFlag: 0, userId: userId } });
       }else{
         if(req.params.status=="In-progress"){
           status=0;
         }else{
           status=1;
         }
-        todos = await ToDo.findAll({ where: { status: status } });
+        todos = await ToDo.findAll({ where: { status: status, deleteFlag: 0, userId: userId } });
       }
-      allCounts = await ToDo.findAll({ where: { deleteFlag: 0 } });
-      inprogressCounts = await ToDo.findAll({ where: { status: 0, deleteFlag: 0 } });
-      completedCounts = await ToDo.findAll({ where: { status: 1, deleteFlag: 0 } });
+      allCounts = await ToDo.findAll({ where: { deleteFlag: 0, userId: userId } });
+      inprogressCounts = await ToDo.findAll({ where: { status: 0, deleteFlag: 0, userId: userId } });
+      completedCounts = await ToDo.findAll({ where: { status: 1, deleteFlag: 0, userId: userId } });
       var all = allCounts.length;
       var inprogress = inprogressCounts.length;
       var completed = completedCounts.length;
@@ -167,7 +162,6 @@ router.get('/todos/:status', async (req, res) => {
     res.status(500).json({ status: "failure", message: 'Server error' });
   }
 });
-
 
 // Delete a to-do item
 router.delete('/todos/:id', async (req, res) => {
