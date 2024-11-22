@@ -22,7 +22,7 @@ const App = () => {
   
     // Check email format before making the API call
     if (!emailRegex.test(email)) {
-      setErrorMessage("Invalid email. Use lowercase letters and numbers only, ending with @gmail.com.");
+      setErrorMessage("Invalid Email-id. Use lowercase letters and numbers only, ending with @gmail.com.");
       return;
     }
     if (password === '') {
@@ -44,17 +44,15 @@ const App = () => {
         return;
       }
   
-      const data = await response.json();
-      console.log('data:', data);
-  
+      const data = await response.json();  
       if (data.status === "success") {
-        localStorage.setItem('accessToken', data.data.accessToken);
-        localStorage.setItem('refreshToken', data.data.refreshToken);
-        localStorage.setItem('userId', data.data.id);
+        sessionStorage.setItem('accessToken', data.data.accessToken);
+        sessionStorage.setItem('refreshToken', data.data.refreshToken);
+        sessionStorage.setItem('userId', data.data.id);
         setIsSignedIn(true);
         setErrorMessage('');
       } else {
-        setErrorMessage("Server error, please try again later.");
+        setErrorMessage(data.message);
       }
   
     } catch (error) {
@@ -82,7 +80,7 @@ const App = () => {
 
 const handleSignUp = async() =>{
   try {
-    var data={
+    var signupData={
       email: email,
       password: password
     }
@@ -91,15 +89,19 @@ const handleSignUp = async() =>{
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(signupData),
   });
-  const result = await response.json();
-  setShowSuccessMessage(true);
-  setShowSignUp(false);
-  setIsSignedIn(false);
-  setEmail('');
-  setPassword('');
-  setConfirmPassword('');
+  const data = await response.json();
+  if (data.status === "success") {
+    setShowSuccessMessage(true);
+    setShowSignUp(false);
+    setIsSignedIn(false);
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  }else{
+    setErrorMessage(data.message); 
+  }
 } catch (error) {
   console.error('Error sending data:', error);
 }
@@ -127,8 +129,7 @@ const handleSignUp = async() =>{
     return <Apps />;
   }
 
-  const accessToken = localStorage.getItem('accessToken');
-    console.log("accessToken--1", accessToken)
+  const accessToken = sessionStorage.getItem('accessToken');
     if (accessToken) {
         return <Apps />;
     }
