@@ -1,6 +1,7 @@
 // models/ToDo.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // Adjust this import to your config path
+const { all } = require('../routes/todo');
 
 const ToDo = sequelize.define('ToDos', {
  id: {
@@ -17,6 +18,10 @@ const ToDo = sequelize.define('ToDos', {
     type: DataTypes.INTEGER,
     default: 0,
     // allowNull: false
+  },
+  userId:{
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   deleteFlag: {
     type: DataTypes.INTEGER,
