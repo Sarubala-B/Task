@@ -26,13 +26,13 @@ router.post('/refresh', (req, res) => {
     const authHeader = refreshToken.split('.');
     const expectedHash = crypto.createHmac('sha256', REFRESH_SECRET_KEY).update(authHeader[0]).digest('hex');
     if (authHeader[1] != expectedHash){
-      res.status(200).json({
+      res.status(401).json({
         status: 'failure',
         message: 'Invalid Token',
       });
     }else{
       if(Date.now > parseInt(authHeader[2])){
-        res.status(200).json({
+        res.status(401).json({
           status: 'failure',
           message: 'Token Expired',
         });
@@ -46,7 +46,7 @@ router.post('/refresh', (req, res) => {
       }
     }
   }else{
-    res.status(200).json({
+    res.status(400).json({
       status: 'failure',
       message: 'Token not available',
     });
@@ -58,9 +58,9 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     // Check if user exists
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email:email } });
     if (!user) {
-      return res.status(200).json({
+      return res.status(404).json({
         status: 'failure',
         message: 'User not found. Please sign up'
       });
@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
     // Compare the provided password with the stored hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(200).json({
+      return res.status(401).json({
         status: 'failure',
         message: 'Invalid email or password'
       });
