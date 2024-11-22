@@ -7,17 +7,22 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   try {
-    console.log("req", req.body)
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+      return res.status(200).json({
+        status: 'failure',
+        message: 'Email and password are required',
+      });
     }
 
     // Check if email is already registered
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'Email already in use.' });
+      return res.status(200).json({
+        status: 'failure',
+        message: 'Email already in use',
+      });
     }
 
     // Hash the password before saving
@@ -25,7 +30,11 @@ router.post('/signup', async (req, res) => {
 
     // Save the plain-text password (not recommended)
     const user = await User.create({ email, password:hashedPassword });
-    res.status(201).json({ message: 'User successfully registered', user });
+    res.status(200).json({
+      status: 'success',
+      message: 'User successfully registered',
+      data: user
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
