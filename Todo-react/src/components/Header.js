@@ -184,39 +184,6 @@ function Apps() {
         }
     };
 
-    // const handleDeleteTask = async(taskToDelete) => {
-    //     try {
-    //         const response = await fetch('http://localhost:5000/api/todos/'+taskToDelete.id, {
-    //             method: 'DELETE',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': sessionStorage.getItem('accessToken'),
-    //                 'UserId': sessionStorage.getItem('userId')
-    //             },
-    //         });
-    //         if (!response.ok) {
-    //             const errorData = await response.json();
-    //             throw new Error(errorData.message || 'Failed to save task to the database');
-    //         }
-    
-    //         const data = await response.json();
-    //         if(data.status=="success"){
-    //             setToastStatus({status: data.status, message:data.message});
-    //             setTaskToDelete(null);
-    //             getTodos();
-    //         }else{
-    //             setToastStatus({status: data.status, message:data.message})
-    //             if(data.message=="Token Expired"){
-    //                 getRefreshToken();
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Error saving task:', error);
-    //         setToastStatus({status: "failure", message:"Error saving task to database"})
-    //     }
-    // };
-
-
     const handleDeleteTask = async (taskToDelete) => {
         try {
             const response = await fetch('http://localhost:5000/api/deleteTask', {
