@@ -164,35 +164,6 @@
     }
   });
 
-    // // Delete a to-do item
-    // router.delete('/todos/:id', async (req, res) => {
-    //   try {
-    //     const verifyToken = verifyAuthToken(req);
-    //     if(verifyToken.status){
-    //     // const todo = await ToDo.findByPk(req.params.id);
-    //     const todo = await ToDo.findOne({ where: { id:req.params.id } });
-
-    //     if (!todo) {
-    //       return res.status(404).json({ status: "failure", message: 'Task not found' });
-    //     }
-    //     const [updated] = await ToDo.update(
-    //       { deleteFlag: 1 },         
-    //       { where: { id: req.params.id } }      
-    //     )   
-    //     if (updated) {
-    //       res.status(200).json({status:"success", message: 'Task deleted successfully' });
-    //     }else{
-    //       res.status(400).json({status:"failure", message: 'Task not deleted successfully' });
-    //     }
-    //     }else{
-    //       res.status(401).json({ status:"failure", message: verifyToken.message})
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ status: "failure", message: 'Server error' });
-    //   }
-    // });
-
     router.post('/deleteTask', async (req, res) => {
       try {
         const verifyToken = verifyAuthToken(req);
