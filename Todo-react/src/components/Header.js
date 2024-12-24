@@ -34,7 +34,6 @@ function Apps() {
     }, [activeTab]);
 
     const handleLogout = () => {
-        // Implement the logout functionality here
         sessionStorage.clear();
         setShowLogin(true)
     };
@@ -56,7 +55,7 @@ function Apps() {
     
         // API call to save task in the database
         try {
-            const response = await fetch('http://localhost:5000/api/todos', {
+            const response = await fetch('http://localhost:5000/api/addTask', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,9 +118,11 @@ function Apps() {
         }
     };
 
+// www.geeks.org?name=abcage=22
+
     const getTodos = async() =>{
         try {
-            const response = await fetch('http://localhost:5000/api/todos/'+activeTab, {
+            const response = await fetch('http://localhost:5000/api/todos?activeTab='+activeTab , {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -245,7 +246,6 @@ function Apps() {
             setToastStatus({status: "failure", message:"Error saving task to database"})
         }
     };
-
 
     const handleOpenDeleteDialog = (task) => {
         setTaskToDelete(task);
