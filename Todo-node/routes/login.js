@@ -1,10 +1,8 @@
 // routes/signup.js
-
 const express = require('express');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const User = require('../models/User');
-
 const router = express.Router();
 
 const SECRET_KEY = "a3f5c1eaa2834c1f92f0568abed83b4b9f0fcd8a7e5cbfed4fbd01dc5762c8ab"; // Replace with a secure key
