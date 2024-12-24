@@ -14,7 +14,7 @@ const App = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [registeredUsers, setRegisteredUsers] = useState({}); // State to store registered users
 
-  const emailRegex = /^[a-z0-9]+@gmail\.com$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
  
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const App = () => {
       if (!response.ok) {
         // If the response is not OK, handle specific errors
         const errorData = await response.json();
-        setErrorMessage(errorData.error || 'Failed to login');
+        setErrorMessage(errorData.error || 'User not found. Please sign up');
         return;
       }
   
@@ -61,7 +61,6 @@ const App = () => {
     }
   };
   
-                     
 
   const validateSignUp = async (e) => {
     e.preventDefault();
